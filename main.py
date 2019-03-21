@@ -2,11 +2,11 @@ import json
 import requests
 
 
-def get_stream_content(url):
+def get_stream_content(url, should_use):
   r = requests.get(url, stream=True)
 
   for line in r.iter_lines():
-    if line:
+    if line and should_use(line):
       decoded_line = line.decode('utf-8')
       print(json.loads(decoded_line))
 
